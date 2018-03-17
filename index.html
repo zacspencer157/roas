@@ -1,0 +1,402 @@
+<body onload="cascadeChannel()" style="overflow-x:auto;">
+<h1 class="pageTitles">ROAS Calculator</h1>
+  <br>
+<h2 class="pageTitles">Step 1: Your Business</h2>
+<div class="metricsComp">
+  <div class="compCPC">
+   <div class="tableTitle">Vertical</div>
+    <br><br>
+    <select id="vertical" class="businessInfo" onchange="industryAverages(); cascadeChannelOff();">
+    <option value="Blank"></option>
+    <option value="Advocacy">Advocacy</option>
+    <option value="Auto">Auto</option>
+    <option value="B2B">B2B</option>
+    <option value="Consumer Services">Consumer Services</option>
+    <option value="Dating &amp; Personals">Dating &amp; Personals</option>
+    <option value="E-Commerce">E-Commerce</option>
+    <option value="Education">Education</option>
+    <option value="Employment Services">Employment Services</option>
+    <option value="Finance &amp; Insurance">Finance &amp; Insurance</option>
+    <option value="Health &amp; Medical">Health &amp; Medical</option>
+    <option value="Home Goods">Home Goods</option>
+    <option value="Industrial Services">Industrial Services</option>
+    <option value="Legal">Legal</option>
+    <option value="Real Estate">Real Estate</option>
+    <option value="Technology">Technology</option>
+    <option value="Travel &amp; Hospitality">Travel &amp; Hospitality</option>
+  </select>
+  </div>
+
+  <div class="adChannels" id="industryBox">
+    <div class="tableTitle">Advertising Channels</div>
+    <br>
+    <input type="checkbox" id="searchCheck" onChange="searchShow()">Google Search</input>
+    <input type="checkbox" id="gDisplayCheck" onChange="gDisplayShow()">Google Display</input>
+    <input type="checkbox" id="otherCheck" onChange="otherShow()">Other Ad Channel</input>
+  </div>
+  <br style="clear: left;" />
+</div>
+<br style="clear: left;" />
+
+<div id="step2" style="display:none">
+<h2 class="pageTitles">Step 2: Liftime Value & Budget</h2>
+<div class="budgetComp">
+  <div class="performanceComp">
+    <div class="tableTitle">Average<br>Purchase Value</div>
+    <br>
+    <div class="currencyPurchase"><input class="businessInfo" type="number" id="firstNumber" placeholder=" 0.00" oninput="averagePurchaseValue()"/></div>
+   </div>
+  <div id="borderDiv"></div>
+  <div class="performanceComp" id="industryBox">
+    <div class="tableTitle">Average<br>Repeat Orders</div><br>
+    <input class="businessInfo" class="float" type="number" id="secondNumber" placeholder="Orders" oninput="averageRepeatValue()" oninput="ltvMultiplyBy()"/>
+  </div><div id="borderDiv"></div>
+  <div class="performanceComp" id="industryBox">
+    <div class="tableTitle">Acquisition<br>Budget</div><br>
+    <div class="percentageBudget"><input class="businessInfo" type="number" placeholder=" 0.00 " id ="budget" oninput="budgetValue()"/></div>
+<div class="help-tip"><p>Acquisition Budget is the percentage of total revenue you are willing to devote to marketing</p>
+    </div>
+  </div>
+</div>
+</div>
+<br style="clear: left;"/>
+
+<div id="step3" style="display:none">
+<h2 class="pageTitles">Step 3: Conversion Objectives</h2>
+<div class="objectiveComp">
+  <div class="objectiveCompCPC">
+     <div class="tableTitle">Conversion Objective</div><br>
+     <input type="radio" id="objectivePurchase" name="objective" value="Purchase" onchange="leadBoxShow()">Purchase</input>
+     <input type="radio" id="objectiveLead" name="objective" value="Lead" onchange="leadBoxShow()">Lead 
+  </input>
+  </div>
+  <div class="compCPC" id="industryBox" >
+    <div class="tableTitle">Using a Tripwire?</div><br>
+    <input type="radio" id="tripYes" name="tripwire" value="Yes" onchange="tripBoxShow()">Yes</input>
+    <input type="radio" id="tripNo" name="tripwire" value="No" onchange="tripBoxShow()">No</input>
+  </div>
+  <br style="clear: left;" />
+</div>
+</div>
+<br style="clear: left;" />
+
+
+<div id="convDataContainer" style="display:none">
+<h2 class="pageTitles">Step 4: Conversion & Cost Data</h2>
+<div id="gSearchConvData" class="metricsComp" style="display:none">
+  <div class="compCPC">
+    <div class="tableTitle">Google Search Conv. %</div><br>
+    <div class="percentage"><input class="businessInfo" type="number" placeholder=" 0.00 " id = "clientSearchConv" oninput="searchConvValue()"/></div>
+  </div>
+  
+  <div class="compCPC" id="industryBox">
+   <div class="tableTitle">Google Search CPC</div><br>
+   <div class="currency"><input class="businessInfo" type="number" placeholder=" 0.00 " id = "clientSearchCPC" oninput="otherButtonShow();displayButtonShow();searchButtonShow();leadButtonShow();calcButtonHide();"/></div>
+  </div>
+  <br style="clear: left;"/>
+</div>
+<br style="clear: left;"/>
+<div id="gDisplayConvData" class="metricsComp" style="display:none">
+  <div class="compCPC">
+    <div class="tableTitle">Google Display Conv. %</div><br>
+    <div class="percentage"><input class="businessInfo" type="number" placeholder=" 0.00 " id = "clientDisplayConv" oninput="displayConvValue()"/></div>
+  </div>
+  
+  <div class="compCPC" id="industryBox">
+    <div class="tableTitle">Google Display CPC</div><br>
+    <div class="currency"><input class="businessInfo" type="number" placeholder=" 0.00 " id = "clientDisplayCPC" oninput="otherButtonShow();displayButtonShow();searchButtonShow();leadButtonShow();calcButtonHide();"/></div>
+  </div>
+  <br style="clear: left;"/>
+</div>
+  <br style="clear: left;"/>
+<div class="metricsComp" id="otherConvData" style="display:none">
+  <div class="compCPC">
+    <div class="tableTitle">Other Ads Conv. %</div><br>
+    <div class="percentage"><input class="businessInfo" type="number" placeholder=" 0.00 " id = "clientOtherConv" oninput="otherConvValue()"/></div>
+  </div>
+  
+  <div class="compCPC" id="industryBox">
+    <div class="tableTitle">Other Ads CPC</div><br>
+    <div class="currency"><input class="businessInfo" type="number" placeholder=" 0.00 " id = "clientOtherCPC" oninput="otherButtonShow();displayButtonShow();searchButtonShow();leadButtonShow();calcButtonHide();"/></div>
+  </div>
+  <br style="clear: left;"/>
+</div>
+ <br style="clear: left;"/>
+<div class="metricsComp" id="leadConvRates" style="display:none">
+  <div class="compCPC">
+    <div class="tableTitle" id="leadToGoalTitle">Lead to Purchase<br>Conv. %</div><br>
+    <div class="percentage"><input class="businessInfo" type="number" placeholder=" 0.00 " id="leadToPurchaseConv" oninput="otherButtonShow();displayButtonShow();searchButtonShow();leadButtonShow();calcButtonHide();"/></div>
+  </div>
+  
+  <div class="compCPC" id="industryBox">
+    <div class="tableTitle" id= "tripToGoalTitle">Tripwire to Purchase<br>Conv.%</div><br>
+    <div class="percentage"><input class="businessInfo" type="number" placeholder=" 0.00 " id="tripToPurchaseConv" oninput="otherButtonShow();displayButtonShow();searchButtonShow();leadButtonShow();calcButtonHide();"/></div>
+  </div>
+  <br style="clear: left;" />
+</div>
+
+<br style="clear: left;" />
+<form id="calculateButton" style="display:none">
+<input type="button" onClick="forcast()" Value="Calculate CPA Forcast" />
+</form>
+<br style="clear: left;"/>
+<div id="results" style="display:none">
+  <div id="gSearchContainer" style="display:none">
+  <h3 class="pageTitles">Google Search</h3>
+  <div class="metricsComp">
+    <div class="compCPC">
+      <div class="tableTitle">Google Search CPC</div><br>
+      <div id = "clientSearchCPCComp" class="results">-</div>
+    </div>
+    <div class="compCPC" id="industryBox">
+      <div class="tableTitle">Industry Average CPC</div><br>
+      <div id = "gSearchCPC" class="results"/>$-.--</div>
+    </div>
+    <br style="clear: left;" />
+  </div>
+  <br>
+  <div class="metricsComp">
+    <div class="compCPC">
+      <div class="tableTitle">Google Search Conv. %</div><br>
+      <div id = "clientSearchConvComp" class="results">-</div>
+    </div>
+    <div class="compCPC" id="industryBox">
+      <div class="tableTitle">Industry Average Conv. %</div><br>
+      <div id = "gSearchConv" class="results"/>-.--%</div>
+    </div>
+    <br style="clear: left;"/>
+  </div>
+<br style="clear: left;" />
+  <div class="metricsComp">
+    <div class="compCPC">
+      <div class="tableTitle">Clicks/Purchase</div><br>
+      <div id = "searchClicksPurchase" class="results">-</div>
+    </div>
+    <div class="compCPC" id="industryBox">
+      <div class="tableTitle">Cost/Purchase</div><br>
+      <div id = "searchCostPurchase" class="results">-</div>
+    </div>
+    <br style="clear: left;"/>
+  </div>
+
+  <div style="display:none" id="gSearchLeadBox" class="metricsComp">
+     <div class="compCPC">
+       <div class="tableTitle">Clicks/Lead</div><br>
+       <div id = "searchClicksLead" class="results">-</div>
+     </div>
+     <div class="compCPC" id="industryBox">
+       <div class="tableTitle">Cost/Lead</div><br>
+       <div id = "searchCostLead" class="results">-</div>
+     </div>
+    <br style="clear: left;"/>
+  </div>
+<br style="clear: left;" />
+  <div style="display:none" id = "gSearchTripBox" class="metricsComp">
+     <div class="compCPC">
+       <div class="tableTitle">Clicks/Tripwire</div><br>
+       <div id = "searchClicksTrip" class="results">-</div>
+     </div>
+     <div class="compCPC" id="industryBox">
+       <div class="tableTitle">Cost/Tripwire</div><br>
+       <div id = "searchCostTrip" class="results">-</div>
+     </div>
+    <br style="clear: left;"/>
+  </div>
+
+  <div class="adCampaigns" id="searchROASBox">
+        <div class="tableTitle">Search ROAS</div><br>
+        <br>
+        <div id = "searchROAS" class="results">$-.--</div>
+  </div>
+
+  <div class="adCampaigns" id="searchROASBox">
+        <div class="tableTitle">Minimum ROAS</div><br>
+        <br>
+        <div id = "minROAS1" class="results">$-.--</div>
+  </div>
+    <br style="clear: left;"/>
+  </div>
+
+  <br>
+
+  <div id="gDisplayContainer" style="display:none">
+  <h3>Google Display</h3>
+  <div class="metricsComp">
+    <div class="compCPC">
+      <div class="tableTitle">Google Display CPC</div><br>
+      <div id = "clientDisplayCPCComp" class="results">-</div>
+    </div>
+    <div class="compCPC" id="industryBox">
+      <div class="tableTitle">Industry Average CPC</div><br>
+      <div id = "gDisplayCPC" class="results"/>$-.--</div>
+    </div>
+    <br style="clear: left;" />
+  </div>
+  <br>
+  <div class="metricsComp">
+    <div class="compCPC">
+      <div class="tableTitle">Google Display Conv. %</div><br>
+      <div id = "clientDisplayConvComp" class="results">-</div>
+    </div>
+    <div class="compCPC" id="industryBox">
+      <div class="tableTitle">Industry Average Conv. %</div><br>
+      <div id = "gDisplayConv" class="results"/>-.--%</div>
+    </div>
+    <br style="clear: left;"/>
+  </div>
+<br style="clear: left;" />
+  <div class="metricsComp">
+    <div class="compCPC">
+      <div class="tableTitle">Clicks/Purchase</div><br>
+      <div id = "displayClicksPurchase" class="results">-</div>
+    </div>
+    <div class="compCPC" id="industryBox">
+      <div class="tableTitle">Cost/Purchase</div><br>
+      <div id = "displayCostPurchase" class="results">-</div>
+    </div>
+    <br style="clear: left;"/>
+  </div>
+
+  <div style="display:none" id = "gDisplayLeadBox" class="metricsComp">
+     <div class="compCPC">
+       <div class="tableTitle">Clicks/Lead</div><br>
+       <div id = "displayClicksLead" class="results">-</div>
+     </div>
+     <div class="compCPC" id="industryBox">
+       <div class="tableTitle">Cost/Lead</div><br>
+       <div id = "displayCostLead" class="results">-</div>
+     </div>
+    <br style="clear: left;"/>
+  </div>
+<br style="clear: left;" />
+  <div style="display:none" id = "gDisplayTripBox" class="metricsComp">
+     <div class="compCPC">
+       <div class="tableTitle">Clicks/Tripwire</div><br>
+       <div id = "displayClicksTrip" class="results">-</div>
+     </div>
+     <div class="compCPC" id="industryBox">
+       <div class="tableTitle">Cost/Tripwire</div><br>
+       <div id = "displayCostTrip" class="results">-</div>
+     </div>
+    <br style="clear: left;"/>
+  </div>
+
+  <div class="adCampaigns" id="searchROASBox">
+        <div class="tableTitle">Display ROAS</div><br>
+        <br>
+        <div id = "displayROAS" class="results">$-.--</div>
+  </div>
+
+  <div class="adCampaigns" id="searchROASBox">
+        <div class="tableTitle">Minimum ROAS</div><br>
+        <br>
+        <div id = "minROAS2" class="results">$-.--</div>
+  </div>
+    <br style="clear: left;"/>
+  </div>
+
+  <br>
+  <div id="otherContainer" style="display:none">
+  <h3>Other Channel</h3>
+  <div class="metricsComp">
+    <div class="compCPC">
+      <div class="tableTitle">Other Ads CPC</div><br>
+      <div id = "clientOtherCPCComp" class="results">-</div>
+    </div>
+    <div class="compCPC" id="industryBox">
+      <div class="tableTitle">Industry Average CPC</div><br>
+      <div id = "fbCPC" class="results"/>$-.--</div>
+    </div>
+    <br style="clear: left;" />
+  </div>
+  <br>
+  <div class="metricsComp">
+    <div class="compCPC">
+      <div class="tableTitle">Other Ads Conv. %</div><br>
+      <div id = "clientOtherConvComp" class="results">-</div>
+    </div>
+    <div class="compCPC" id="industryBox">
+      <div class="tableTitle">Industry Average Conv. %</div><br>
+      <div id = "otherConv" class="results"/>-.--%</div>
+    </div>
+    <br style="clear: left;"/>
+  </div>
+<br style="clear: left;" />
+  <div class="metricsComp">
+    <div class="compCPC">
+      <div class="tableTitle">Clicks/Purchase</div><br>
+      <div id = "otherClicksPurchase" class="results">-</div>
+    </div>
+    <div class="compCPC" id="industryBox">
+      <div class="tableTitle">Cost/Purchase</div><br>
+      <div id = "otherCostPurchase" class="results">-</div>
+    </div>
+    <br style="clear: left;"/>
+  </div>
+
+  <div style="display:none" id = "otherLeadBox" class="metricsComp">
+     <div class="compCPC">
+       <div class="tableTitle">Clicks/Lead</div><br>
+       <div id = "otherClicksLead" class="results">-</div>
+     </div>
+     <div class="compCPC" id="industryBox">
+       <div class="tableTitle">Cost/Lead</div><br>
+       <div id = "otherCostLead" class="results">-</div>
+     </div>
+    <br style="clear: left;"/>
+  </div>
+<br style="clear: left;" />
+  <div style="display:none" id = "otherTripBox" class="metricsComp">
+     <div class="compCPC">
+       <div class="tableTitle">Clicks/Tripwire</div><br>
+       <div id = "otherClicksTrip" class="results">-</div>
+     </div>
+     <div class="compCPC" id="industryBox">
+       <div class="tableTitle">Cost/Tripwire</div><br>
+       <div id = "otherCostTrip" class="results">-</div>
+     </div>
+    <br style="clear: left;"/>
+  </div>
+
+  <div class="adCampaigns" id="searchROASBox">
+        <div class="tableTitle">Other ROAS</div><br>
+        <br>
+        <div id = "otherROAS" class="results">$-.--</div>
+  </div>
+
+  <div class="adCampaigns" id="searchROASBox">
+        <div class="tableTitle">Minimum ROAS</div><br>
+        <br>
+        <div id = "minROAS3" class="results">$-.--</div>
+  </div>
+    <br style="clear: left;"/>
+  </div>
+
+  <br>
+
+
+
+  <br>
+
+
+
+  <br>
+  <h3>CPA Goals</h3>
+
+  <div class="CPAgoals" id="purchaseCPABox" style="display:none">
+    <div class="tableTitle">Purchase CPA</div><br>
+    <div id = "purchaseCPA" class="results">$-.--</div>
+  </div>
+  <div class="CPAgoals" id="leadCPABox" style="display:none">
+    <div class="tableTitle">Lead CPA</div><br>
+    <div id = "leadCPA" class="results">$-.--</div>
+  </div>
+  <div class="CPAgoals" id="tripCPABox" style="display:none">
+    <div class="tableTitle">Tripwire CPA</div><br>
+    <div id = "tripCPA" class="results">$-.--</div>
+  </div>
+</div>
+
+
+
+
